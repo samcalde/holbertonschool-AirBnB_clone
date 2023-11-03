@@ -11,4 +11,38 @@ import json
 
 
 class FileStorage:
-    pass
+    """
+    Class used to save object instances and reload them from a JSON file
+    """
+    def __init__(self):
+        self.__file_path = './file.json'
+        self.__objects = {}
+    
+    def all(self):
+        """
+        Returns the dictionary of current instances
+        """
+        return self.__objects
+
+    def new(self, obj):
+        """
+        Adds a new object to the dictionary self.__objects
+        """
+        self.__objects[obj.id] = obj.to_dict()
+    
+    def save(self):
+        """
+        Saves self.__objects into a JSON file
+        """
+        with open(f'{self.__file_path}', 'w') as file:
+            json.dump(self.__objects, file)
+    
+    def reload(self):
+        """
+        Loads a JSON file into self.__objects
+        """
+        try:
+            with open(f'{self.__file_path}', 'r') as file:
+                self.__objects = json.load(file)
+        except:
+            pass
