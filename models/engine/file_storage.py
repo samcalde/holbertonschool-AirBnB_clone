@@ -14,10 +14,9 @@ class FileStorage:
     """
     Class used to save object instances and reload them from a JSON file
     """
-    def __init__(self):
-        self.__file_path = './file.json'
-        self.__objects = {}
-    
+    __file_path = 'file.json'
+    __objects = {}
+
     def all(self):
         """
         Returns the dictionary of current instances
@@ -28,21 +27,26 @@ class FileStorage:
         """
         Adds a new object to the dictionary self.__objects
         """
-        self.__objects[f'{obj.__class__.__name__}.{obj.id}'] = obj.to_dict()
-    
+        self.__objects[f'{obj.__class__.__name__}.{obj.id}'] = obj
+
     def save(self):
         """
         Saves self.__objects into a JSON file
         """
+        serialized_objects = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
         with open(f'{self.__file_path}', 'w') as file:
-            json.dump(self.__objects, file)
-    
+            json.dump(serialized_objects, file, default=str)
+
     def reload(self):
         """
         Loads a JSON file into self.__objects
         """
+        from models.base_model import BaseModel
         try:
             with open(f'{self.__file_path}', 'r') as file:
-                self.__objects = json.load(file)
+                data = json.load(file)
+                for key, value in data.items():
+                    obj = BaseModel(**value)
+                    FileStorage.__objects[key] = obj
         except:
             pass
