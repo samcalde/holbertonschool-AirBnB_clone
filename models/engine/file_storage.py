@@ -28,7 +28,7 @@ class FileStorage:
         """
         Adds a new object to the dictionary self.__objects
         """
-        self.__objects[obj.id] = obj.to_dict()
+        self.__objects[f'{obj.__class__.__name__}.{obj.id}'] = obj.to_dict()
     
     def save(self):
         """
