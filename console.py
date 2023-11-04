@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 
 
+"""
+This module contains the command interpreter for the AirBnB console
+"""
+
+
 import cmd
 
 
