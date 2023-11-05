@@ -30,12 +30,13 @@ class HBNBCommand(cmd.Cmd):
             if all_instances:
                 try:
                     del all_instances[f'{class_name}.{instance_id}']
+                    storage.save()
                 except:
                     print("** no instance found **")
             else:
                 print("** no instance found **")
         else:
-            print("** class name missing *")
+            print("** class name missing **")
 
     def do_all(self, arg):
         if arg == 'BaseModel' or arg == '':
@@ -108,6 +109,8 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
             else:
                 print("** no instance found **")
+        else:
+            print("** class name missing **")
 
     def do_create(self, arg):
         """
