@@ -19,8 +19,8 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
-    allowed_classes = ('BaseModel', 'User', 'State', 'City', 'Amenity', 'Place')
-    allowed_classes.append('Review') #to comply with pycodestyle
+    allowed_class = ('BaseModel', 'User', 'State', 'City', 'Amenity', 'Place')
+    allowed_class.append('Review')
 
     def do_destroy(self, arg):
         """
@@ -29,7 +29,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if args:
             class_name = args[0]
-            if class_name not in self.allowed_classes:
+            if class_name not in self.allowed_class:
                 print("** class doesn't exist **")
                 return
             try:
@@ -53,9 +53,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints all instances saves of a single class or every class
         """
-
-
-        if arg in self.allowed_classes or arg == '':
+        if arg in self.allowed_class or arg == '':
             instances_dictionary = storage.all()
             for key, value in instances_dictionary.items():
                 class_and_id = key.split(".")
@@ -91,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if class_name not in self.allowed_classes:
+        if class_name not in self.allowed_class:
             print("** class doesn't exist **")
             return
 
@@ -117,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if args:
             class_name = args[0]
-            if class_name not in self.allowed_classes:
+            if class_name not in self.allowed_class:
                 print("** class doesn't exist **")
                 return
             try:
@@ -142,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
         Creates a new instance of BaseModel, saves it and prints the id
         """
         if arg:
-            if arg in self.allowed_classes:
+            if arg in self.allowed_class:
                 new_model = eval(arg)()
                 new_model.save()
                 print(new_model.id)
