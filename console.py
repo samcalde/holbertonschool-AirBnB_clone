@@ -18,6 +18,9 @@ This module contains the command interpreter for the AirBnB console
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    Class defines the behaviour of the command interpreter
+    """
     prompt = '(hbnb)'
     allowed_class = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place']
     allowed_class.append('Review')
