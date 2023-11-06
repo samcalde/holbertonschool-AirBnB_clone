@@ -33,20 +33,23 @@ class FileStorage:
         """
         Saves self.__objects into a JSON file
         """
-        serialized_objects = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
+        ser_obj = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
         with open(f'{self.__file_path}', 'w') as file:
-            json.dump(serialized_objects, file, default=str)
+            json.dump(ser_obj, file, default=str)
 
     def reload(self):
         """
         Loads a JSON file into self.__objects
         """
         from models.base_model import BaseModel
+        from models.user import User
         try:
             with open(f'{self.__file_path}', 'r') as file:
                 data = json.load(file)
                 for key, value in data.items():
-                    obj = BaseModel(**value)
+                    instance_key = key.split(".")
+                    class_name = instance_key[0].strip('"')
+                    obj = eval(class_name)(**value)
                     FileStorage.__objects[key] = obj
         except:
             pass

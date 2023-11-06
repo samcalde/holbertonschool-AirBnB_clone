@@ -13,12 +13,16 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
+    allowed_classes = ('BaseModel', 'User')
 
     def do_destroy(self, arg):
+        """
+        removes an instance from the database
+        """
         args = arg.split()
         if args:
             class_name = args[0]
-            if class_name != 'BaseModel':
+            if class_name not in self.allowed_classes:
                 print("** class doesn't exist **")
                 return
             try:
@@ -39,14 +43,23 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_all(self, arg):
-        if arg == 'BaseModel' or arg == '':
+        """
+        Prints all instances saves of a single class or every class
+        """
+        if arg in self.allowed_classes or arg == '': #update to print only the class
             instances_dictionary = storage.all()
-            for item, value in instances_dictionary.items():
-                print(value)
+            for key, value in instances_dictionary.items():
+                class_and_id = key.split(".")
+                instance_class = class_and_id[0]
+                if arg == '' or instance_class == arg:
+                    print(value)
         else:
             print("** class doesn't exist **")
 
     def do_update(self, arg):
+        """
+        Updates the value of an attribute
+        """
         args = arg.split()
         if args:
             class_name = args[0]
@@ -69,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if class_name != 'BaseModel':
+        if class_name not in self.allowed_classes:
             print("** class doesn't exist **")
             return
         
@@ -89,10 +102,13 @@ class HBNBCommand(cmd.Cmd):
         setattr(instance, attribute_name, attribute_value)
 
     def do_show(self, arg):
+        """
+        shows an instance based on class name and id
+        """
         args = arg.split()
         if args:
             class_name = args[0]
-            if class_name != 'BaseModel':
+            if class_name not in self.allowed_classes:
                 print("** class doesn't exist **")
                 return
             try:
@@ -117,8 +133,8 @@ class HBNBCommand(cmd.Cmd):
         Creates a new instance of BaseModel, saves it and prints the id
         """
         if arg:
-            if arg == 'BaseModel':
-                new_model = BaseModel()
+            if arg in self.allowed_classes:
+                new_model = arg()
                 new_model.save()
                 print (new_model.id)
             else:
