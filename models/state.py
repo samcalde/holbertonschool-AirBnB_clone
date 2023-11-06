@@ -2,7 +2,7 @@
 
 
 """
-This module will define the class state, with 
+This module will define the class state, with
 BaseModel implementation
 """
 

@@ -33,7 +33,7 @@ class FileStorage:
         """
         Saves self.__objects into a JSON file
         """
-        ser_obj = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
+        ser_obj = {k: o.to_dict() for k, o in FileStorage.__objects.items()}
         with open(f'{self.__file_path}', 'w') as file:
             json.dump(ser_obj, file, default=str)
 
@@ -56,5 +56,5 @@ class FileStorage:
                     class_name = instance_key[0].strip('"')
                     obj = eval(class_name)(**value)
                     FileStorage.__objects[key] = obj
-        except:
+        except Exception as e:
             pass

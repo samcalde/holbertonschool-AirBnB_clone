@@ -2,7 +2,7 @@
 
 
 """
-This module will define the user state, with 
+This module will define the user state, with
 BaseModel implementation
 """
 

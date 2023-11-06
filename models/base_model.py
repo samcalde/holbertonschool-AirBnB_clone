@@ -2,7 +2,7 @@
 
 
 """
-This module will define the BaseModel class, with 
+This module will define the BaseModel class, with
 common attributes/methods for other classes
 """
 
@@ -32,7 +32,7 @@ class BaseModel:
         """
         Returns print format [<class name>] (<self.id>) <self.__dict__>
         """
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+        return (f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
 
     def save(self):
         """
@@ -55,8 +55,9 @@ class BaseModel:
         """
         Creates an instance from a dictionary
         """
-        kwargs['created_at'] = datetime.strptime(kwargs['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
-        kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'], "%Y-%m-%dT%H:%M:%S.%f")
+        iso = "%Y-%m-%dT%H:%M:%S.%f"
+        kwargs['created_at'] = datetime.strptime(kwargs['created_at'], iso)
+        kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'], iso)
         for key, value in kwargs.items():
             if key != '__class__':
                 setattr(self, key, value)

@@ -19,7 +19,8 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
-    allowed_classes = ('BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review')
+    allowed_classes = ('BaseModel', 'User', 'State', 'City', 'Amenity', 'Place')
+    allowed_classes.append('Review') #to comply with pycodestyle
 
     def do_destroy(self, arg):
         """
@@ -33,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
                 return
             try:
                 instance_id = args[1]
-            except:
+            except Exception as e:
                 print("** instance id missing **")
                 return
             all_instances = storage.all()
@@ -41,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     del all_instances[f'{class_name}.{instance_id}']
                     storage.save()
-                except:
+                except Exception as e:
                     print("** no instance found **")
             else:
                 print("** no instance found **")
@@ -52,7 +53,9 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints all instances saves of a single class or every class
         """
-        if arg in self.allowed_classes or arg == '': #update to print only the class
+
+
+        if arg in self.allowed_classes or arg == '':
             instances_dictionary = storage.all()
             for key, value in instances_dictionary.items():
                 class_and_id = key.split(".")
@@ -71,17 +74,17 @@ class HBNBCommand(cmd.Cmd):
             class_name = args[0]
             try:
                 instance_id = args[1]
-            except:
+            except Exception as e:
                 print("** instance id missing **")
                 return
             try:
                 attribute_name = args[2]
-            except:
+            except Exception as e:
                 print("** attribute name missing **")
                 return
             try:
                 attribute_value = args[3]
-            except:
+            except Exception as e:
                 print("** value missing **")
                 return
         else:
@@ -91,12 +94,12 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in self.allowed_classes:
             print("** class doesn't exist **")
             return
-        
+
         all_instances = storage.all()
         if all_instances:
             try:
                 instance = all_instances[f'{class_name}.{instance_id}']
-            except:
+            except Exception as e:
                 print("** no instance found **")
                 return
 
@@ -119,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
                 return
             try:
                 instance_id = args[1]
-            except:
+            except Exception as e:
                 print("** instance id missing **")
                 return
             all_instances = storage.all()
@@ -127,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     instance = all_instances[f'{class_name}.{instance_id}']
                     print(instance)
-                except:
+                except Exception as e:
                     print("** no instance found **")
             else:
                 print("** no instance found **")
@@ -142,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
             if arg in self.allowed_classes:
                 new_model = eval(arg)()
                 new_model.save()
-                print (new_model.id)
+                print(new_model.id)
             else:
                 print("** class doesn't exist **")
         else:
@@ -160,17 +163,18 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
-    def do_EOF(self,arg):
+    def do_EOF(self, arg):
         """
         EOF command. Ends interpreter
         """
         return True
-    
+
     def emptyline(self):
         """
         Does nothing
         """
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
