@@ -17,11 +17,11 @@ class User(BaseModel):
     first and last name
     """
     def __init__(self, *args, **kwargs):
-        if kwargs:
-            super().__init__(**kwargs)
-        else:
-            super().__init__()
         self.email = ""
         self.password = ""
         self.first_name = ""
         self.last_name = ""
+        if kwargs:
+            super().__init__(**kwargs)
+        else:
+            super().__init__()

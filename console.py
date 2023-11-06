@@ -8,6 +8,7 @@ This module contains the command interpreter for the AirBnB console
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -134,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if arg:
             if arg in self.allowed_classes:
-                new_model = arg()
+                new_model = eval(arg)()
                 new_model.save()
                 print (new_model.id)
             else:
