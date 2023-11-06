@@ -16,11 +16,12 @@ class User(BaseModel):
     several attributes, such as email, password, 
     first and last name
     """
+    email = ""
+    password = ""
+    first_name = ""
+    last_name = ""
+    
     def __init__(self, *args, **kwargs):
-        self.email = ""
-        self.password = ""
-        self.first_name = ""
-        self.last_name = ""
         if kwargs:
             super().__init__(**kwargs)
         else:
