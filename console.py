@@ -14,7 +14,7 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
-    allowed_classes = ('BaseModel', 'User')
+    allowed_classes = ('BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review')
 
     def do_destroy(self, arg):
         """
