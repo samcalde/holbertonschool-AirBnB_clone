@@ -20,7 +20,7 @@ This module contains the command interpreter for the AirBnB console
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
     allowed_class = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place']
-    allowed_class.append['Review']
+    allowed_class.append('Review')
 
     def do_destroy(self, arg):
         """
