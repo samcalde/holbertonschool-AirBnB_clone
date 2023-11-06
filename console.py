@@ -22,8 +22,8 @@ class HBNBCommand(cmd.Cmd):
     Class defines the behaviour of the command interpreter
     """
     prompt = '(hbnb)'
-    allowed_class = ['BaseModel', 'User', 'State', 'City', 'Amenity'\
-    , 'Place', 'Review']
+    allowed_class = ['BaseModel', 'User', 'State', 'City', 'Amenity',
+        'Place', 'Review']
 
     def do_destroy(self, arg):
         """
