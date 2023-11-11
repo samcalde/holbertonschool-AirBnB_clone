@@ -41,6 +41,19 @@ class FileStorage:
         """
         Loads a JSON file into self.__objects
         """
+        BaseModel, User, State, City, Amenity, Place, Review = self.import_modules()
+        try:
+            with open(f'{self.__file_path}', 'r') as file:
+                data = json.load(file)
+                for key, value in data.items():
+                    instance_key = key.split(".")
+                    class_name = instance_key[0]
+                    obj = eval(class_name)(**value)
+                    FileStorage.__objects[key] = obj
+        except Exception as e:
+            pass
+    
+    def import_modules(self):
         from models.base_model import BaseModel
         from models.user import User
         from models.state import State
@@ -48,13 +61,4 @@ class FileStorage:
         from models.amenity import Amenity
         from models.place import Place
         from models.review import Review
-        try:
-            with open(f'{self.__file_path}', 'r') as file:
-                data = json.load(file)
-                for key, value in data.items():
-                    instance_key = key.split(".")
-                    class_name = instance_key[0].strip('"')
-                    obj = eval(class_name)(**value)
-                    FileStorage.__objects[key] = obj
-        except Exception as e:
-            pass
+        return(BaseModel, User, State, City, Amenity, Place, Review)
