@@ -47,8 +47,8 @@
     margin-bottom: 5px;
 }
 
-.locations:hover .dropdown,
-.amenities:hover .dropdown {
+.locations:hover > .dropdown,
+.amenities:hover > .dropdown {
     display: block;
     width: 100%;
     background-color: white;
